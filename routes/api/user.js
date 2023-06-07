@@ -7,13 +7,14 @@ const controllerUser = require('../../component/user/Controller');
 router.post('/add', async (req, res) => {
     try {
         const { username, password, name, phonenumber } = req.body;
+        console.log("addUser", username, password, name, phonenumber);
         const user = await controllerUser.addUser(username, password, name, phonenumber);
         if (user) {
             return res.status(200).json({ result: true, user: user });
         }
-        return res.status(400).json({ result: false, user: null });
+        return res.status(200).json({ result: false, user: null });
     } catch (error) {
-        res.status(500).json({ result: false, user: null });
+        return res.status(500).json({ result: false, user: null });
     }
 });
 //get all user
@@ -22,11 +23,11 @@ router.get('/get-all', async (req, res) => {
     try {
         const users = await controllerUser.getAllUser();
         if (users) {
-            res.status(200).json({ result: true, user: users });
+            return res.status(200).json({ result: true, user: users });
         }
-        return res.status(400).json({ result: false, user: null });
+        return res.status(200).json({ result: false, user: null });
     } catch (error) {
-        res.status(500).json({ result: false, user: null });
+        return res.status(500).json({ result: false, user: null });
     }
 });
 //get user by id
@@ -35,17 +36,17 @@ router.get('/get-by-id/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const user = await controllerUser.getUserById(id);
-        if (!user) {
+        if (user) {
             return res.status(200).json({ result: true, user: user });
         }
-        return res.status(400).json({ result: false, user: null });
+        return res.status(200).json({ result: false, user: null });
     } catch (error) {
-        res.status(500).json({ result: false, user: null });
+        return res.status(500).json({ result: false, user: null });
     }
 });
 //update user
 //http://localhost:3000/api/user/update/1
-router.put('/update/:id', async (req, res) => {
+router.post('/update/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const { name, phonenumber } = req.body;
@@ -53,28 +54,28 @@ router.put('/update/:id', async (req, res) => {
         if (user) {
             return res.status(200).json({ result: true, user: user });
         }
-        return res.status(400).json({ result: false, user: null });
+        return res.status(200).json({ result: false, user: null });
     } catch (error) {
-        res.status(500).json({ result: false, user: null });
+        return res.status(500).json({ result: false, user: null });
     }
 });
 //change password
 //http://localhost:3000/api/user/change-password
-router.put('/change-password', async (req, res) => {
+router.post('/change-password', async (req, res) => {
     try {
-        const { username, password } = req.body;
-        const user = await controllerUser.changePassword(username, password);
+        const { username, oldpassword, newpassword } = req.body;
+        const user = await controllerUser.changePassword( username, oldpassword, newpassword );
         if (user) {
             return res.status(200).json({ result: true, user: user });
         }
-        return res.status(400).json({ result: false, user: null });
+        return res.status(200).json({ result: false, user: null });
     } catch (error) {
-        res.status(500).json({ result: false, user: null });
+        return res.status(500).json({ result: false, user: null });
     }
 });
 //set status
 //http://localhost:3000/api/user/set-status/1
-router.put('/set-status/:id', async (req, res) => {
+router.post('/set-status/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
@@ -84,7 +85,21 @@ router.put('/set-status/:id', async (req, res) => {
         }
         return res.status(400).json({ result: false, user: null });
     } catch (error) {
-        res.status(500).json({ result: false, user: null });
+        return res.status(500).json({ result: false, user: null });
+    }
+});
+//login
+//http://localhost:3000/api/user/login
+router.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+        const user = await controllerUser.login(username, password);
+        if (user) {
+            return res.status(200).json({ result: true, user: user });
+        }
+        return res.status(200).json({ result: false, user: null });
+    } catch (error) {
+        return res.status(500).json({ result: false, user: null });
     }
 });
 module.exports = router;

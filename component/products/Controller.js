@@ -48,21 +48,30 @@ const addImage = async (id, images) => {
     }
 }
 //add comment
-const addcomment = async (id, comment) => {
+const addcomment = async (id, username, text) => {
     try {
-        const product = await serviceProduct.addcomment(id, comment);
+        const product = await serviceProduct.addcomment(id, username, text);
         return product;
     } catch (error) {
         throw new Error("Error: addcomment controller", error);
     }
 };
-const deletecomment = async (id, comment) => {
+const deletecomment = async (id, idcomment) => {
     try {
-        const product = await serviceProduct.deletecomment(id, comment);
+        const product = await serviceProduct.deletecomment(id, idcomment);
         return product;
     } catch (error) {
         throw new Error("Error: deletecomment controller", error);
     }
 };
+//get product by namenuser
+const getProductByNamenuser = async (name) => {
+    try {
+        const product = await serviceProduct.getProductByNamenuser(name);
+        return product;
+    } catch (error) {
+        throw new Error("Error: getProductByNamenuser controller", error);
+    }
+};
 
-module.exports = {getAllProduct, getProductById, addProduct, deleteProduct, addImage, addcomment, deletecomment};
+module.exports = {getAllProduct, getProductById, addProduct, deleteProduct, addImage, addcomment, deletecomment, getProductByNamenuser};

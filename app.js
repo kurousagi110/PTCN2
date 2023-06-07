@@ -43,7 +43,7 @@ app.use(cors({
 }));
 
 //conect to mongodb
-mongoose.connect('mongodb+srv://hoatrinh14020:a123456@cluster0.lqnicyx.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://hoatrinh14020:a123456@kurousagi.1ko1zne.mongodb.net/?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })

@@ -37,9 +37,9 @@ const updateUser = async (id, name, phonenumber) => {
     }
 };
 //change password
-const changePassword = async (username, password) => {
+const changePassword = async (username, oldpassword, newpassword) => {
     try {
-        const user = await serviceUser.changePassword(username, password);
+        const user = await serviceUser.changePassword(username, oldpassword, newpassword);
         return user;
     } catch (error) {
         throw new Error("Error: changePassword controller", error);
@@ -54,5 +54,14 @@ const setStatus = async (id, status) => {
         throw new Error("Error: setStatus controller", error);
     }
 };
+//login 
+const login = async (username, password) => {
+    try {
+        const user = await serviceUser.login(username, password);
+        return user;
+    } catch (error) {
+        throw new Error("Error: login controller", error);
+    }
+};
 
-module.exports = { getAllUser, getUserById, addUser, updateUser, changePassword, setStatus }
+module.exports = { getAllUser, getUserById, addUser, updateUser, changePassword, setStatus, login }

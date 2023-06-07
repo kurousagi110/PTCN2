@@ -7,7 +7,7 @@ const productSchema = new Schema({
     name: { type : String},
     user: {
         nameuser: { type : String},
-        phonenumber: { type : String},
+        phonenumberuser: { type : String},
     },
     phonenumber: { type : String},
     banknumber: { type : String},
